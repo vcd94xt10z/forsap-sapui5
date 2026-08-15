@@ -1,18 +1,28 @@
 {
   "name": "forsap",
   "version": "0.1.0",
-  "description": "Reusable SAPUI5 controls",
+  "description": "Biblioteca de recursos reutilizáveis para desenvolvimento de aplicações SAPUI5 e Fiori",
   "keywords": [
     "sapui5",
     "ui5",
     "sap",
     "fiori",
-    "controls"
+    "controls",
+    "formatter",
+    "valuehelp",
+    "utilities"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vcd94xt10z/forsap-sapui5.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vcd94xt10z/forsap-sapui5/issues"
+  },
+  "homepage": "https://github.com/vcd94xt10z/forsap-sapui5",
   "files": [
     "src",
-    "test",
     "ui5.yaml",
     "README.md",
     "LICENSE"
