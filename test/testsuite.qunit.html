@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>forsap Tests</title>
+
+    <script
+        id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/1.120.14/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-async="true"
+        data-sap-ui-resourceroots='{
+            "forsap": "/resources/forsap",
+            "test": "/test-resources"
+        }'>
+    </script>
+
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            sap.ui.require([
+                "sap/ui/qunit/qunit",
+                "test/unit/IntegerInput.qunit",
+                "test/unit/DecimalInput.qunit"
+            ], function () {
+                QUnit.start();
+            });
+        });
+    </script>
+</head>
+<body class="sapUiBody">
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+</body>
+</html>

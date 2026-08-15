@@ -1,0 +1,10 @@
+specVersion: "4.0"
+type: library
+metadata:
+  name: forsap
+framework:
+  name: SAPUI5
+  version: "1.120.14"
+  libraries:
+    - name: sap.ui.core
+    - name: sap.m

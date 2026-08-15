@@ -1,0 +1,28 @@
+{
+  "name": "forsap",
+  "version": "0.1.0",
+  "description": "Reusable SAPUI5 controls",
+  "keywords": [
+    "sapui5",
+    "ui5",
+    "sap",
+    "fiori",
+    "controls"
+  ],
+  "license": "MIT",
+  "files": [
+    "src",
+    "test",
+    "ui5.yaml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "ui5 serve -o /test-resources/demo/index.html",
+    "build": "ui5 build --all",
+    "test": "ui5 serve -o /test-resources/testsuite.qunit.html"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^4.0.0"
+  }
+}

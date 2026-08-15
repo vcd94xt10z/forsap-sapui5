@@ -1,0 +1,69 @@
+<mvc:View
+    controllerName="demo.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:forsap="forsap">
+
+    <Page title="forsap - Controles">
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Title text="IntegerInput" level="H2" />
+
+                <Label
+                    text="Somente números inteiros"
+                    class="sapUiSmallMarginTop" />
+
+                <forsap:IntegerInput
+                    id="integerInput"
+                    width="100%"
+                    placeholder="Digite um inteiro" />
+
+                <Text
+                    text="{= 'Valor: ' + ${/integerValue} }"
+                    class="sapUiSmallMarginTop" />
+
+                <Title
+                    text="DecimalInput"
+                    level="H2"
+                    class="sapUiLargeMarginTop" />
+
+                <Label
+                    text="2 casas decimais"
+                    class="sapUiSmallMarginTop" />
+
+                <forsap:DecimalInput
+                    id="decimalInput2"
+                    width="100%"
+                    decimalPlaces="2"
+                    placeholder="Ex.: 123,45" />
+
+                <Text
+                    text="{= 'Valor: ' + ${/decimalValue2} }"
+                    class="sapUiSmallMarginTop" />
+
+                <Label
+                    text="3 casas decimais"
+                    class="sapUiMediumMarginTop" />
+
+                <forsap:DecimalInput
+                    id="decimalInput3"
+                    width="100%"
+                    decimalPlaces="3"
+                    placeholder="Ex.: 123,456" />
+
+                <Text
+                    text="{= 'Valor: ' + ${/decimalValue3} }"
+                    class="sapUiSmallMarginTop" />
+
+                <Title
+                    text="Exemplos"
+                    level="H2"
+                    class="sapUiLargeMarginTop" />
+
+                <Text text="IntegerInput: 123, -123" />
+                <Text text="DecimalInput: 123,45 ou 123.45" />
+                <Text text="O DecimalInput limita a quantidade de casas definida em decimalPlaces." />
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
