@@ -1,9 +1,11 @@
 sap.ui.define([
     "sap/m/Input",
     "sap/m/InputRenderer",
-    "sap/m/InputType"
-], function (Input, InputRenderer, InputType) {
+    "sap/m/library"
+], function (Input, InputRenderer, mobileLibrary) {
     "use strict";
+
+    const InputType = mobileLibrary.InputType;
 
     return Input.extend("forsap.IntegerInput", {
         metadata: {

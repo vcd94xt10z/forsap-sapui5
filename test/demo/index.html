@@ -4,6 +4,16 @@
     <meta charset="utf-8">
     <title>forsap Demo</title>
 
+    <style>
+        html,
+        body,
+        #content {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+
     <script
         id="sap-ui-bootstrap"
         src="/resources/sap-ui-core.js"
@@ -12,8 +22,7 @@
         data-sap-ui-async="true"
         data-sap-ui-compat-version="edge"
         data-sap-ui-resourceroots='{
-            "demo": "/test-resources/demo",
-            "forsap": "/resources/forsap"
+            "demo": "/test-resources/demo"
         }'>
     </script>
 
@@ -24,6 +33,9 @@
             ], function (ComponentContainer) {
                 new ComponentContainer({
                     name: "demo",
+                    async: true,
+                    manifest: true,
+                    width: "100%",
                     height: "100%"
                 }).placeAt("content");
             });
@@ -31,5 +43,8 @@
     </script>
 </head>
 
-<body class="sapUiBody" id="content"></body>
+<body
+    class="sapUiBody"
+    id="content">
+</body>
 </html>

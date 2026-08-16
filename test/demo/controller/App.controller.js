@@ -9,7 +9,8 @@ sap.ui.define([
             this.getView().setModel(new JSONModel({
                 integerValue: "",
                 decimalValue2: "",
-                decimalValue3: ""
+                decimalValue3: "",
+                Supplier: ""
             }));
 
             this.byId("integerInput").attachLiveChange(function (oEvent) {

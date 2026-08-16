@@ -15,7 +15,8 @@ sap.ui.define([
         },
         controls: [
             "forsap.IntegerInput",
-            "forsap.DecimalInput"
+            "forsap.DecimalInput",
+            "forsap.VendorInput"
         ]
     });
 });

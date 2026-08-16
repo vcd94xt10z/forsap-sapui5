@@ -2,9 +2,17 @@
     controllerName="demo.controller.App"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:forsap="forsap">
+    xmlns:forsap="forsap"
+    height="100%">
 
-    <Page title="forsap - Controles">
+    <Page height="100%">
+        <customHeader>
+            <Toolbar>
+                <HBox width="100%" class="sapUiSmallMarginBegin sapUiSmallMarginEnd">
+                    <Title text="forsap - Controles" />
+                </HBox>
+            </Toolbar>
+        </customHeader>
         <content>
             <VBox class="sapUiMediumMargin">
                 <Title text="IntegerInput" level="H2" />
@@ -56,13 +64,33 @@
                     class="sapUiSmallMarginTop" />
 
                 <Title
+                    text="VendorInput"
+                    level="H2"
+                    class="sapUiLargeMarginTop" />
+
+                <Label
+                    text="Fornecedor - modo de teste"
+                    class="sapUiSmallMarginTop" />
+
+                <forsap:VendorInput
+                    id="vendorInput"
+                    width="100%"
+                    testMode="true"
+                    value="{/Supplier}"
+                    placeholder="Selecione o fornecedor..." />
+
+                <Text
+                    text="{= 'Fornecedor selecionado: ' + ${/Supplier} }"
+                    class="sapUiSmallMarginTop" />
+
+                <Title
                     text="Exemplos"
                     level="H2"
                     class="sapUiLargeMarginTop" />
 
                 <Text text="IntegerInput: 123, -123" />
                 <Text text="DecimalInput: 123,45 ou 123.45" />
-                <Text text="O DecimalInput limita a quantidade de casas definida em decimalPlaces." />
+                <Text text="VendorInput: abre o Value Help com 5 fornecedores em testMode." />
             </VBox>
         </content>
     </Page>
