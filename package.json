@@ -1,6 +1,6 @@
 {
   "name": "forsap",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Biblioteca de recursos reutilizáveis para desenvolvimento de aplicações SAPUI5 e Fiori",
   "keywords": [
     "sapui5",
