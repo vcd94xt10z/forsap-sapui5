@@ -307,6 +307,12 @@ sap.ui.define([
             const sPath =
                 "/" + this.getEntitySet();
 
+            const bUseBatch = oModel.bUseBatch;
+
+            if (bUseBatch) {
+                oModel.setUseBatch(false);
+            }
+
             oModel.read(sPath, {
                 urlParameters: {
                     "$select":
@@ -314,11 +320,19 @@ sap.ui.define([
                     "$top": "100"
                 },
                 success: function (oData) {
+                    if (bUseBatch) {
+                        oModel.setUseBatch(true);
+                    }
+
                     this._setValueHelpData(
                         oData.results || []
                     );
                 }.bind(this),
                 error: function () {
+                    if (bUseBatch) {
+                        oModel.setUseBatch(true);
+                    }
+
                     this._setValueHelpData([]);
 
                     MessageBox.error(
