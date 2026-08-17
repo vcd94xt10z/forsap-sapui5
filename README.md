@@ -10,7 +10,64 @@ Instale o pacote no projeto:
 npm install forsap
 ```
 
-Para utilizar a biblioteca em uma aplicação SAPUI5 com `fiori-tools-proxy`, consulte a configuração de recursos do projeto.
+Após a instalação, são necessárias duas configurações no projeto SAPUI5/Fiori para que a biblioteca seja disponibilizada corretamente durante o desenvolvimento.
+
+### 1. Configurar o `manifest.json`
+
+No arquivo `webapp/manifest.json`, localize a seção `sap.ui` e adicione a dependência `forsap`:
+
+```json
+"sap.ui": {
+    "dependencies": {
+        "minUI5Version": "1.115.0",
+        "libs": {
+            "sap.m": {},
+            "sap.ui.core": {},
+            "forsap": {}
+        }
+    }
+}
+```
+
+A biblioteca `forsap` deve estar registrada em `sap.ui.dependencies.libs`.
+
+### 2. Configurar o `ui5.yaml`
+
+No arquivo `ui5.yaml`, localize a configuração do `fiori-tools-proxy`.
+
+Na propriedade `path`, altere:
+
+```yaml
+path:
+    - /resources
+```
+
+para:
+
+```yaml
+path:
+    - /resources/sap*
+```
+
+Exemplo:
+
+```yaml
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertErrors: false
+        ui5:
+          path:
+            - /resources/sap*
+            - /test-resources
+          url: https://ui5.sap.com
+```
+
+Essa configuração permite que os recursos da biblioteca sejam carregados corretamente junto com os recursos SAPUI5 durante o desenvolvimento.
+
+Após essas duas configurações, a biblioteca pode ser utilizada normalmente na aplicação.
 
 ## Uso
 
