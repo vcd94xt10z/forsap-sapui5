@@ -1,4 +1,5 @@
 @echo off
+cls
 chcp 65001 > nul
 
 call npm login
