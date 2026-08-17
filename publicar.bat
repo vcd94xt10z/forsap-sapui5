@@ -1,9 +1,9 @@
 @echo off
 
-npm version patch
+call npm version patch --no-git-tag-version
 git add -A
 git commit -m "Atualização"
 git push
-npm publish
+call npm publish
 
 pause
