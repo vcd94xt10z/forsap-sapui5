@@ -88,14 +88,8 @@ sap.ui.define([
             events: {
                 vendorSelected: {
                     parameters: {
-                        supplier: {
-                            type: "string"
-                        },
-                        supplierName: {
-                            type: "string"
-                        },
-                        taxNumber1: {
-                            type: "string"
+                        vendor: {
+                            type: "object"
                         }
                     }
                 }
@@ -426,12 +420,7 @@ sap.ui.define([
             );
 
             this.fireVendorSelected({
-                supplier:
-                    oSupplier.Supplier || "",
-                supplierName:
-                    oSupplier.SupplierName || "",
-                taxNumber1:
-                    oSupplier.TaxNumber1 || ""
+                vendor: oSupplier
             });
 
             this._oValueHelpDialog.close();
