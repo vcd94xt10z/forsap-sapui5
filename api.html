@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>forsap — API Reference</title>
+<style>
+:root {
+  --blue:#0a6ed1; --blue2:#0854a0; --ink:#1d2d3e; --muted:#5b6b7b; --line:#d9e0e7;
+  --bg:#f5f7f9; --panel:#fff; --nav:#f8fafc; --shadow:0 1px 4px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"72",Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);font-size:14px}
+button,input{font:inherit}
+.topbar{height:58px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 22px;position:sticky;top:0;z-index:20;box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:11px;min-width:270px;font-size:18px;font-weight:700;color:#24364b}
+.brand-mark{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#ff7b00,#ff3d00);display:grid;place-items:center;color:#fff;font-weight:800}
+.search{margin:auto;position:relative;width:min(420px,40vw)}
+.search input{width:100%;height:36px;border:1px solid #aab8c6;border-radius:20px;padding:0 42px 0 16px;outline:none;background:#f7f9fb}
+.search input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(10,110,209,.12)}
+.search-icon{position:absolute;right:13px;top:8px;color:#435466}
+.version{min-width:270px;text-align:right;color:#34495e;font-weight:600}
+.layout{display:grid;grid-template-columns:290px 1fr;min-height:calc(100vh - 58px)}
+.sidebar{background:#fff;border-right:1px solid var(--line);position:sticky;top:58px;height:calc(100vh - 58px);overflow:auto}
+.side-title{padding:22px 20px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#718092;font-weight:700}
+.nav-item{width:100%;border:0;background:transparent;text-align:left;padding:10px 20px;cursor:pointer;color:#25364a;display:flex;gap:10px;align-items:center;font-weight:600}
+.nav-item:hover{background:#edf5fc}
+.nav-item.active{background:#e8f2fb;color:var(--blue);border-right:3px solid var(--blue)}
+.type-icon{font-size:11px;width:18px;height:18px;border-radius:4px;background:#eef2f6;display:grid;place-items:center;color:#516274}
+.main{min-width:0}
+.control-page{display:none;max-width:1180px;margin:0 auto;padding:32px 42px 80px}
+.control-page.active{display:block}
+.breadcrumbs{color:#657588;font-size:13px;margin-bottom:18px}
+.breadcrumbs span{padding:0 8px;color:#9aa8b5}
+.class-header{background:#fff;border:1px solid var(--line);border-radius:8px;padding:28px 30px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr 330px;gap:30px}
+.eyebrow{font-size:12px;color:#6d7d8d;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:7px}
+h1{margin:0 0 14px;font-size:30px;line-height:1.15;color:#172b3f}
+.lead{font-size:16px;line-height:1.6;color:#506274;margin:0;max-width:750px}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-content:center}
+.meta-grid div{border-left:3px solid #d7e5f3;padding-left:12px}
+.meta-grid span{display:block;color:#718092;font-size:12px;margin-bottom:5px}
+.meta-grid strong{font-size:13px;overflow-wrap:anywhere}
+.tabs{display:flex;gap:2px;margin:24px 0 0;border-bottom:1px solid var(--line);background:#fff;border-radius:8px 8px 0 0;padding:0 12px}
+.tabs a{padding:15px 16px;color:#31475d;text-decoration:none;font-weight:600;border-bottom:3px solid transparent}
+.tabs a:hover{color:var(--blue)}
+.tabs a:first-child{color:var(--blue);border-bottom-color:var(--blue)}
+.api-section{background:#fff;border:1px solid var(--line);border-top:0;padding:28px 30px}
+.api-section:last-child{border-radius:0 0 8px 8px}
+.api-section h2{font-size:22px;margin:0 0 16px;color:#1c2f43}
+.api-section h3{font-size:16px;margin:25px 0 10px}
+.api-section p{line-height:1.65;color:#4e6072}
+pre{background:#17212b;color:#eaf2f8;border-radius:6px;padding:18px;overflow:auto;line-height:1.55;border:1px solid #253746}
+code{font-family:Consolas,"Courier New",monospace;font-size:13px}
+:not(pre)>code{background:#eef2f5;color:#263c50;padding:2px 5px;border-radius:3px}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px}
+th{background:#f2f5f7;color:#33495e;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+th,td{padding:12px 13px;border:1px solid var(--line);vertical-align:top}
+td{color:#425669;line-height:1.5}
+td:first-child{color:#1d3449;font-weight:600}
+ul{line-height:1.8;color:#4e6072}
+.note{background:#f0f7ff;border-left:4px solid var(--blue);padding:13px 15px;margin:18px 0;color:#36536d}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips span{background:#edf3f7;border:1px solid #d8e2e9;border-radius:16px;padding:6px 11px;font-family:monospace}
+.footer{max-width:1180px;margin:24px auto 0;padding:0 42px 35px;color:#748394;font-size:12px}
+.empty{display:none}
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .version{display:none}
+  .brand{min-width:auto}
+  .search{width:45vw}
+  .class-header{grid-template-columns:1fr}
+  .control-page{padding:22px 16px 50px}
+  .footer{padding:0 16px 25px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="brand-mark">f</div><span>forsap API Reference</span></div>
+  <div class="search"><input id="search" type="search" placeholder="Pesquisar na API" aria-label="Pesquisar na API"><span class="search-icon">⌕</span></div>
+  <div class="version">Versão 0.1.0 ▾</div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="side-title">Biblioteca</div>
+    <button class="nav-item active" data-control="IntegerInput"><span class="type-icon">N</span>IntegerInput</button>
+    <button class="nav-item" data-control="DecimalInput"><span class="type-icon">N</span>DecimalInput</button>
+    <button class="nav-item" data-control="VendorInput"><span class="type-icon">C</span>VendorInput</button>
+    <div class="side-title">Referência</div>
+    <div style="padding:0 20px 20px;color:#68798a;line-height:1.6">
+      Controles reutilizáveis para aplicações SAPUI5 e Fiori.
+    </div>
+  </aside>
+  <main class="main">
+    
+    <article class="control-page" id="page-IntegerInput">
+      <div class="breadcrumbs">forsap <span>›</span> IntegerInput</div>
+      <header class="class-header">
+        <div>
+          <div class="eyebrow">classe</div>
+          <h1>forsap.IntegerInput</h1>
+          <p class="lead">Controle baseado em sap.m.Input para entrada de valores inteiros, com validação para números inteiros e suporte a valores negativos.</p>
+        </div>
+        <div class="meta-grid">
+          <div><span>Visibilidade</span><strong>pública</strong></div>
+          <div><span>Estende</span><strong>sap.m.Input</strong></div>
+          <div><span>Módulo</span><strong>forsap/IntegerInput</strong></div>
+          <div><span>Biblioteca</span><strong>forsap</strong></div>
+        </div>
+      </header>
+      <nav class="tabs">
+        <a href="#IntegerInput-overview">Visão geral</a>
+        <a href="#IntegerInput-properties">Propriedades</a>
+        <a href="#IntegerInput-events">Eventos</a>
+        <a href="#IntegerInput-methods">Métodos</a>
+      </nav>
+      <section class="api-section" id="IntegerInput-overview">
+        <h2>Visão geral</h2>
+        <p>Controle baseado em sap.m.Input para entrada de valores inteiros, com validação para números inteiros e suporte a valores negativos.</p>
+        <h3>Uso</h3>
+        <pre><code>&lt;forsap:IntegerInput
+    id=&quot;quantityInput&quot;
+    width=&quot;100%&quot;
+    value=&quot;{/quantity}&quot;
+    placeholder=&quot;Informe a quantidade&quot; /&gt;</code></pre>
+        <h3>Comportamento</h3>
+        <ul><li>Aceita apenas dígitos.</li><li>Aceita valores negativos.</li><li>O sinal - alterna o sinal do valor.</li><li>O sinal + remove o sinal negativo.</li><li>Utiliza inputmode=&quot;numeric&quot; no elemento HTML interno.</li><li>Preserva o último valor válido quando uma entrada inválida é identificada.</li></ul>
+      </section>
+      <section class="api-section" id="IntegerInput-properties">
+        <h2>Propriedades</h2>
+        <table><thead><tr><th>Nome</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr></thead>
+        <tbody><tr><td><code>value</code></td><td>string</td><td>""</td><td>Propriedade herdada de <code>sap.m.Input</code>.</td></tr><tr><td><code>width</code></td><td>CSSSize</td><td>auto</td><td>Propriedade herdada de <code>sap.m.Input</code>.</td></tr><tr><td><code>placeholder</code></td><td>string</td><td>""</td><td>Propriedade herdada de <code>sap.m.Input</code>.</td></tr></tbody></table>
+      </section>
+      <section class="api-section" id="IntegerInput-events">
+        <h2>Eventos</h2>
+        <table><thead><tr><th>Evento</th><th>Parâmetros</th><th>Descrição</th></tr></thead>
+        <tbody><tr><td><code>Eventos próprios</code></td><td>—</td><td>O controle não adiciona eventos próprios. Os eventos herdados de sap.m.Input continuam disponíveis.</td></tr></tbody></table>
+      </section>
+      <section class="api-section" id="IntegerInput-methods">
+        <h2>Métodos</h2>
+        <p>O controle não define métodos públicos adicionais no contrato da biblioteca. Os métodos públicos herdados de <code>sap.m.Input</code> continuam disponíveis.</p>
+      </section>
+      
+        <section class="api-section">
+          <h2>Valores</h2>
+          <div class="chips"><span>0</span><span>10</span><span>250</span><span>-10</span><span>-250</span></div>
+          <p>Valores com casas decimais ou caracteres alfabéticos não são aceitos como parte do valor.</p>
+        </section>
+        
+    </article>
+    
+    <article class="control-page" id="page-DecimalInput">
+      <div class="breadcrumbs">forsap <span>›</span> DecimalInput</div>
+      <header class="class-header">
+        <div>
+          <div class="eyebrow">classe</div>
+          <h1>forsap.DecimalInput</h1>
+          <p class="lead">Controle baseado em sap.m.Input para entrada de valores decimais, com configuração da quantidade de casas decimais e formatação com ponto para milhares e vírgula para decimais.</p>
+        </div>
+        <div class="meta-grid">
+          <div><span>Visibilidade</span><strong>pública</strong></div>
+          <div><span>Estende</span><strong>sap.m.Input</strong></div>
+          <div><span>Módulo</span><strong>forsap/DecimalInput</strong></div>
+          <div><span>Biblioteca</span><strong>forsap</strong></div>
+        </div>
+      </header>
+      <nav class="tabs">
+        <a href="#DecimalInput-overview">Visão geral</a>
+        <a href="#DecimalInput-properties">Propriedades</a>
+        <a href="#DecimalInput-events">Eventos</a>
+        <a href="#DecimalInput-methods">Métodos</a>
+      </nav>
+      <section class="api-section" id="DecimalInput-overview">
+        <h2>Visão geral</h2>
+        <p>Controle baseado em sap.m.Input para entrada de valores decimais, com configuração da quantidade de casas decimais e formatação com ponto para milhares e vírgula para decimais.</p>
+        <h3>Uso</h3>
+        <pre><code>&lt;forsap:DecimalInput
+    id=&quot;weightInput&quot;
+    width=&quot;100%&quot;
+    value=&quot;{/weight}&quot;
+    decimalPlaces=&quot;2&quot;
+    placeholder=&quot;Informe o peso&quot; /&gt;</code></pre>
+        <h3>Comportamento</h3>
+        <ul><li>Aceita números.</li><li>Aceita valores negativos.</li><li>Aceita . e , como entrada decimal.</li><li>Utiliza inputmode=&quot;decimal&quot; no elemento HTML interno.</li><li>Formata o valor conforme decimalPlaces.</li><li>Utiliza . como separador de milhares.</li><li>Utiliza , como separador decimal.</li><li>Preserva o último valor válido quando uma entrada inválida é identificada.</li></ul>
+      </section>
+      <section class="api-section" id="DecimalInput-properties">
+        <h2>Propriedades</h2>
+        <table><thead><tr><th>Nome</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr></thead>
+        <tbody><tr><td><code>decimalPlaces</code></td><td>int</td><td>2</td><td>Quantidade de casas decimais usada na formatação.</td></tr><tr><td><code>value</code></td><td>string</td><td>""</td><td>Propriedade herdada de <code>sap.m.Input</code>.</td></tr><tr><td><code>width</code></td><td>CSSSize</td><td>auto</td><td>Propriedade herdada de <code>sap.m.Input</code>.</td></tr><tr><td><code>placeholder</code></td><td>string</td><td>""</td><td>Propriedade herdada de <code>sap.m.Input</code>.</td></tr></tbody></table>
+      </section>
+      <section class="api-section" id="DecimalInput-events">
+        <h2>Eventos</h2>
+        <table><thead><tr><th>Evento</th><th>Parâmetros</th><th>Descrição</th></tr></thead>
+        <tbody><tr><td><code>Eventos próprios</code></td><td>—</td><td>O controle não adiciona eventos próprios. Os eventos herdados de sap.m.Input continuam disponíveis.</td></tr></tbody></table>
+      </section>
+      <section class="api-section" id="DecimalInput-methods">
+        <h2>Métodos</h2>
+        <p>O controle não define métodos públicos adicionais no contrato da biblioteca. Os métodos públicos herdados de <code>sap.m.Input</code> continuam disponíveis.</p>
+      </section>
+      
+        <section class="api-section">
+          <h2>Exemplos de formatação</h2>
+          <table><thead><tr><th>Configuração</th><th>Entrada</th><th>Resultado</th></tr></thead>
+          <tbody>
+            <tr><td><code>decimalPlaces="2"</code></td><td>1234</td><td>12,34</td></tr>
+            <tr><td><code>decimalPlaces="3"</code></td><td>1234</td><td>1,234</td></tr>
+            <tr><td><code>decimalPlaces="2"</code></td><td>123456</td><td>1.234,56</td></tr>
+          </tbody></table>
+        </section>
+        
+    </article>
+    
+    <article class="control-page" id="page-VendorInput">
+      <div class="breadcrumbs">forsap <span>›</span> VendorInput</div>
+      <header class="class-header">
+        <div>
+          <div class="eyebrow">classe</div>
+          <h1>forsap.VendorInput</h1>
+          <p class="lead">Controle baseado em sap.m.Input que fornece um campo de entrada com Value Help para seleção de fornecedores.</p>
+        </div>
+        <div class="meta-grid">
+          <div><span>Visibilidade</span><strong>pública</strong></div>
+          <div><span>Estende</span><strong>sap.m.Input</strong></div>
+          <div><span>Módulo</span><strong>forsap/VendorInput</strong></div>
+          <div><span>Biblioteca</span><strong>forsap</strong></div>
+        </div>
+      </header>
+      <nav class="tabs">
+        <a href="#VendorInput-overview">Visão geral</a>
+        <a href="#VendorInput-properties">Propriedades</a>
+        <a href="#VendorInput-events">Eventos</a>
+        <a href="#VendorInput-methods">Métodos</a>
+      </nav>
+      <section class="api-section" id="VendorInput-overview">
+        <h2>Visão geral</h2>
+        <p>Controle baseado em sap.m.Input que fornece um campo de entrada com Value Help para seleção de fornecedores.</p>
+        <h3>Uso</h3>
+        <pre><code>&lt;forsap:VendorInput
+    id=&quot;vendorInput&quot;
+    width=&quot;100%&quot;
+    value=&quot;{/Supplier}&quot;
+    placeholder=&quot;Selecione o fornecedor...&quot;
+    vendorSelected=&quot;.onVendorSelected&quot; /&gt;</code></pre>
+        <h3>Comportamento</h3>
+        <ul><li>Abre um Value Help com tabela de fornecedores.</li><li>Disponibiliza pesquisa por ID do fornecedor, nome e documento.</li><li>Consulta por padrão a entidade A_Supplier.</li><li>Solicita Supplier, SupplierName e TaxNumber1.</li><li>Limita a carga inicial a 100 registros.</li><li>Utiliza filtros Contains nos campos Supplier, SupplierName e TaxNumber1.</li><li>Após a seleção, o Input recebe o número do fornecedor.</li><li>O evento vendorSelected entrega o objeto completo através de getParameter(&quot;vendor&quot;).</li><li>Para o Value Help, a consulta OData V2 é executada sem $batch e o estado original do modelo é restaurado após a consulta.</li></ul>
+      </section>
+      <section class="api-section" id="VendorInput-properties">
+        <h2>Propriedades</h2>
+        <table><thead><tr><th>Nome</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr></thead>
+        <tbody><tr><td><code>testMode</code></td><td>boolean</td><td>false</td><td>Ativa o modo de teste. Quando true, o controle não acessa o backend e utiliza dados internos.</td></tr><tr><td><code>servicePath</code></td><td>string</td><td>/sap/opu/odata/sap/API_BUSINESS_PARTNER/</td><td>Define o caminho padrão do serviço na API do controle. Atualmente a leitura utiliza o ODataModel associado via getModel().</td></tr><tr><td><code>entitySet</code></td><td>string</td><td>A_Supplier</td><td>Define a entidade OData utilizada para carregar os fornecedores.</td></tr><tr><td><code>value</code></td><td>string</td><td>""</td><td>Propriedade herdada de <code>sap.m.Input</code>.</td></tr><tr><td><code>width</code></td><td>CSSSize</td><td>auto</td><td>Propriedade herdada de <code>sap.m.Input</code>.</td></tr><tr><td><code>placeholder</code></td><td>string</td><td>""</td><td>Propriedade herdada de <code>sap.m.Input</code>.</td></tr></tbody></table>
+      </section>
+      <section class="api-section" id="VendorInput-events">
+        <h2>Eventos</h2>
+        <table><thead><tr><th>Evento</th><th>Parâmetros</th><th>Descrição</th></tr></thead>
+        <tbody><tr><td><code>vendorSelected</code></td><td>vendor: object</td><td>Disparado quando o usuário seleciona um fornecedor. O parâmetro vendor contém o objeto completo retornado pela consulta.</td></tr></tbody></table>
+      </section>
+      <section class="api-section" id="VendorInput-methods">
+        <h2>Métodos</h2>
+        <p>O controle não define métodos públicos adicionais no contrato da biblioteca. Os métodos públicos herdados de <code>sap.m.Input</code> continuam disponíveis.</p>
+      </section>
+      
+        <section class="api-section" id="VendorInput-valuehelp">
+          <h2>Value Help</h2>
+          <p>O diálogo apresenta os filtros <strong>ID do fornecedor</strong>, <strong>Nome</strong> e <strong>Documento</strong>, além das colunas Fornecedor, Nome e Documento.</p>
+          <div class="note"><strong>Consulta OData:</strong> <code>/sap/opu/odata/sap/API_BUSINESS_PARTNER/A_Supplier</code></div>
+        </section>
+        <section class="api-section">
+          <h2>Evento <code>vendorSelected</code></h2>
+          <p>O evento disponibiliza o fornecedor selecionado no parâmetro <code>vendor</code>.</p>
+          <pre><code>onVendorSelected: function (oEvent) {
+    const oVendor = oEvent.getParameter(&quot;vendor&quot;);
+
+    console.log(oVendor.Supplier);
+    console.log(oVendor.SupplierName);
+    console.log(oVendor.TaxNumber1);
+}</code></pre>
+          <p>O objeto recebido contém os campos retornados pela consulta da API, por exemplo:</p>
+          <pre><code>{
+    Supplier: &quot;1000000057&quot;,
+    SupplierName: &quot;Adidas AG&quot;,
+    TaxNumber1: &quot;700000057&quot;
+}</code></pre>
+        </section>
+        <section class="api-section">
+          <h2>Modo de teste</h2>
+          <p>Com <code>testMode="true"</code>, o controle não acessa o backend.</p>
+          <table><thead><tr><th>Supplier</th><th>SupplierName</th><th>TaxNumber1</th></tr></thead><tbody><tr><td>1000000001</td><td>Apple Inc.</td><td>123456789</td></tr><tr><td>1000000002</td><td>Microsoft Corporation</td><td>987654321</td></tr><tr><td>1000000003</td><td>Amazon.com, Inc.</td><td>456789123</td></tr><tr><td>1000000004</td><td>SAP SE</td><td>789123456</td></tr><tr><td>1000000005</td><td>Toyota Motor Corporation</td><td>321654987</td></tr></tbody></table>
+        </section>
+        <section class="api-section">
+          <h2>Consumo sem <code>$batch</code></h2>
+          <p>O Value Help usa o ODataModel V2, mas a consulta é temporariamente executada com batch desabilitado. O estado original é restaurado depois da leitura.</p>
+          <table><thead><tr><th>Estado antes</th><th>Durante a consulta</th><th>Estado depois</th></tr></thead>
+          <tbody><tr><td>true</td><td>false</td><td>true</td></tr><tr><td>false</td><td>false</td><td>false</td></tr></tbody></table>
+        </section>
+        
+    </article>
+    
+    <div class="footer">forsap · API Reference em português · Biblioteca baseada em SAPUI5.</div>
+  </main>
+</div>
+<script>
+const buttons=[...document.querySelectorAll(".nav-item")];
+const pages=[...document.querySelectorAll(".control-page")];
+function show(name){
+  buttons.forEach(b=>b.classList.toggle("active",b.dataset.control===name));
+  pages.forEach(p=>p.classList.toggle("active",p.id==="page-"+name));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+buttons.forEach(b=>b.addEventListener("click",()=>show(b.dataset.control)));
+const search=document.getElementById("search");
+search.addEventListener("input",()=>{
+  const q=search.value.trim().toLowerCase();
+  if(!q){buttons.forEach(b=>b.style.display="flex"); return;}
+  buttons.forEach(b=>{
+    const name=b.dataset.control.toLowerCase();
+    b.style.display=name.includes(q)?"flex":"none";
+  });
+  const match=buttons.find(b=>b.style.display!=="none");
+  if(match) show(match.dataset.control);
+});
+document.querySelectorAll(".tabs a").forEach(a=>a.addEventListener("click",e=>{
+  const target=document.querySelector(a.getAttribute("href"));
+  if(target) setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"start"}),0);
+}));
+show("IntegerInput");
+</script>
+</body>
+</html>
